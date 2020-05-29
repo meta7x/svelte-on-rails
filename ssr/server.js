@@ -7,6 +7,7 @@ hypernova({
     getComponent(name) {
         if (process.env.NODE_ENV === 'development' && false) {
             component = require(`./components/${name}.js`).default;
+            
         } else {
             component = components[name]
         }
