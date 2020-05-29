@@ -5,7 +5,7 @@
 // like app/views/layouts/application.html.erb.
 // All it does is render <div>Hello Svelte!</div> at the bottom of the page.
 
-import App from '../app.svelte'
+import App from '../components/App.svelte'
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new App({
