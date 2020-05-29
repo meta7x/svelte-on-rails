@@ -1,24 +1,45 @@
-# README
+# Ruby on Rails with SSR Svelte
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Template for Ruby on Rails app with Svelte installed and configured.
+Svelte components are server-side-rendered using [Hypernova](https://github.com/airbnb/hypernova-ruby)
+and [Rollup](https://github.com/rollup/rollup).
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+### Installation
+The following tools are assumed to be installed:
+- [Ruby on Rails](https://github.com/rails/rails)
+- [Yarn](https://github.com/yarnpkg/yarn)
 
-* System dependencies
+Clone this repository and install all dependencies by running:
+```bash
+# install ruby gems
+bundle install
+# install npm packages
+yarn
+```
 
-* Configuration
+### Adding components
+Per default, all files inside the `app/javascript/components` that end with `.svelte` are compiled and available for SSR.
+To add a new component, simply create a new file containing a Svelte-component:
+```html
+<!-- inside app/javascript/components/MyComponent.svelte -->
+<script>
+  export let label;
+  let count = 0;
+  function handleClick() {
+    count += 1;
+  }
+</script>
 
-* Database creation
+<h1>{label}: {count}</h1>
+<button on:click={handleClick}>
+    Increment {label}
+</button>
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To use it inside your template, use the provided helper function:
+```ruby
+# inside erb-template
+<%= render_component 'MyComponent', name: 'Spoons' %>
+```
