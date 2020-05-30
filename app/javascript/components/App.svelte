@@ -1,11 +1,18 @@
 <script>
-  export let name;
+  export let label;
+  let count = 0;
+  function handleClick() {
+    count += 1;
+  }
 </script>
 
 <style>
-  h1 {
-    color: #FF3E00;
-  }
+h1 {
+  color: orangered;
+}
 </style>
 
-<h1>Hello {name}!</h1>
+<h1>{label}: {count}</h1>
+<button on:click={handleClick}>
+    Increase {label}
+</button>

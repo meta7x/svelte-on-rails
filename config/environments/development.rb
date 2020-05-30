@@ -1,3 +1,7 @@
+require 'hypernova'
+require 'hypernova/plugins/development_mode_plugin'
+Hypernova.add_plugin!(DevelopmentModePlugin.new)
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -59,4 +63,8 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+
+  # Make javascript_pack_tag load assets from webpack-dev-server.
+  config.x.webpacker[:dev_server_host] = 'http://localhost:8080'
 end
