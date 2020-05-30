@@ -35,4 +35,4 @@
 yarn-debug.log*
 .yarn-integrity
 
-/lib/assets/svelte-ssr/dist
+/lib/svelte-ssr/dist

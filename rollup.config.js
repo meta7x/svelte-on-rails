@@ -8,15 +8,15 @@ import pkg from './package.json';
 import fs from 'fs';
 import path from 'path';
 
-const mode = process.env.NODE_ENV;
+const mode = process.env.NODE_ENV || 'development';
 const dev = mode === 'development';
 
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
 
 const COMPONENTS_PATH = path.resolve('app/javascript/components');
-const DIST_PATH = path.resolve('lib/assets/svelte-ssr/dist');
-const TMP_PATH = path.resolve('tmp');
-const TMP_FILENAME = 'rollup-components.js';
+const DIST_PATH = path.resolve('lib/svelte-ssr/dist');
+const TMP_PATH = path.resolve('tmp/ssr');
+const TMP_FILENAME = 'components.js';
 
 const components = fs.readdirSync(COMPONENTS_PATH)
     .filter(name => name.match(/.svelte$/))
@@ -27,6 +27,9 @@ const components = fs.readdirSync(COMPONENTS_PATH)
 const source = components.reduce((string, name) => {
     return string + `import ${name} from '${path.join(COMPONENTS_PATH, name + '.svelte')}';\nexport { ${name} };\n`;
 }, '');
+if (!fs.existsSync(TMP_PATH)){
+    fs.mkdirSync(TMP_PATH);
+}
 fs.writeFileSync(path.join(TMP_PATH, TMP_FILENAME), source);
 
 export default {
